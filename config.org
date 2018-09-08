@@ -51,7 +51,6 @@
 (if window-system (global-hl-line-mode t))
 ;(global-hl-line-mode t)
 #+END_SRC
-
 ** Set UTF-8 encoding
 #+BEGIN_SRC emacs-lisp 
 (setq locale-coding-system 'utf-8)
@@ -102,12 +101,13 @@
 #+Begin_SRC emacs-lisp
 (use-package evil
 	:ensure t
-	:config (evil-mode 1)
+	:init (setq evil-want-C-i-jump nil)
+	:config (evil-mode 1))
 #+END_SRC
 ** Evil-Org
 #+BEGIN_SRC emacs-lisp
 (use-package evil-org
-	:requires evil
+	:requires org evil
 	:ensure t
 	:after org
 	:config
@@ -116,7 +116,7 @@
 			(lambda ()
 				(evil-org-set-key-theme)))
 		(require 'evil-org-agenda)
-		(evil-org-agenda-set-keys)))
+		(evil-org-agenda-set-keys))
 #+END_SRC
 ** Projectile
 #+BEGIN_SRC emacs-lisp
