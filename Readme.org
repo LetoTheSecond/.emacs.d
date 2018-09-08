@@ -1,0 +1,3 @@
+* Content Heavely Stolen from Uncle Dave
+https://www.youtube.com/channel/UCDEtZ7AKmwS0_GNJog01D2g/
+https://github.com/daedreth/UncleDavesEmacs
