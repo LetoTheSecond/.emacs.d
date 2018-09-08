@@ -48,4 +48,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(popup-kill-ring switch-window async avy ido-describe-bindings smex evil moe-theme powerline which-key use-package))))
+	(dashboard dashboad projectile evil-org popup-kill-ring switch-window async avy ido-describe-bindings smex evil moe-theme powerline which-key use-package))))

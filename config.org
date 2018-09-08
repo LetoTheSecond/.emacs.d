@@ -14,7 +14,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 #+END_SRC
-** Treat camelCase words and more than one word
+** Treat camelCase words as more than one word
 #+BEGIN_SRC emacs-lisp
 (global-subword-mode 1)
 #+END_SRC
@@ -48,8 +48,8 @@
 #+END_SRC
 ** Cursor Row Highlighting
 #+BEGIN_SRC emacs-lisp
-; (if window-system (global-hl-line-mode t))
-(global-hl-line-mode t)
+(if window-system (global-hl-line-mode t))
+;(global-hl-line-mode t)
 #+END_SRC
 
 ** Set UTF-8 encoding
@@ -65,7 +65,148 @@
 #+BEGIN_SRC emacs-lisp
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
+* Packages
+** Which-Key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+	:ensure t
+	:init (which-key-mode))
+#+END_SRC
+** SMEX
+#+BEGIN_SRC emacs-lisp
+(use-package smex
+	:ensure t
+	:init (smex-initialize)
+	;:bind ("M-x" . smex)
+)
+#+END_SRC
+** Ido-Describe-Bindings
+ #+Begin_SRC emacs-lisp
+(use-package ido-describe-bindings
+	:ensure t)
+;(define-key help-map (kbd "b") 'ido-describe-bindings)
+ #+END_SRC
+** Ido-Grid-Mode
+#+BEGIN_SRC emacs-lisp
+(use-package ido-grid-mode
+	:ensure t
+	:config (ido-grid-mode 1))
+#+END_SRC
+** Org
+#+Begin_SRC emacs-lisp
+(use-package org
+	; :mode (("\\.org$" . org-mode))
+	:ensure t)
+#+END_SRC
+** Evil
+#+Begin_SRC emacs-lisp
+(use-package evil
+	:ensure t
+	:config (evil-mode 1)
+#+END_SRC
+** Evil-Org
+#+BEGIN_SRC emacs-lisp
+(use-package evil-org
+	:requires evil
+	:ensure t
+	:after org
+	:config
+		(add-hook 'org-mode-hook 'evil-org-mode)
+		(add-hook 'evil-org-mode-hook
+			(lambda ()
+				(evil-org-set-key-theme)))
+		(require 'evil-org-agenda)
+		(evil-org-agenda-set-keys)))
+#+END_SRC
+** Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+	:ensure t
+	:init (projectile-mode 1))
+#+END_SRC
+** Dashboard 
+#+BEGIN_SRC emacs-lisp
+(use-package dashboard
+	:ensure t
+	:config
+		(dashboard-setup-startup-hook)
+		;(setq dashboard-startup-banner "~/.emacs.d/dashboardlogo.png")
+		(setq dashboard-items '((recents . 5)
+							  (projects . 5)))
+		(setq dashboard-banner-logo-title ""))
+#+END_SRC
+** Beacon
+#+Begin_SRC emacs-lisp
+(use-package beacon
+	:ensure t
+	:config (beacon-mode 1))
+#+END_SRC
+** Avy
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+	:ensure t
+	;:bind ("M-s" . avy-goto-char)
+)
+#+END_SRC
+** Async
+ #+BEGIN_SRC emacs-lisp
+(use-package async
+	:ensure t
+	:init (dired-async-mode 1))
+ #+END_SRC
+** Switch Window
+#+BEGIN_SRC emacs-lisp
+(use-package switch-window
+	:ensure t
+	:config
+		(setq switch-window-input-style 'minibuffer)
+		(setq switch-window-increase 4)
+		(setq switch-window-threshold 2)
+	;:bind ([remap other-window] . switch-window)
+)
+#+END_SRC
+** Popup-Kill-Ring
+#+BEGIN_SRC emacs-lisp
+(use-package popup-kill-ring
+	:ensure t
+	;:bind ("M-y" . popup-kill-ring)
+)
+#+END_SRC
+** Powerline
+#+BEGIN_SRC emacs-lisp
+(use-package powerline
+	:ensure t
+	:config (powerline-default-theme))
+#+END_SRC
+** Moe-Theme
+#+BEGIN_SRC emacs-lisp
+(use-package moe-theme
+	:requires powerline
+	:ensure t
+	:after powerline
+	:config
+		(setq moe-theme-highlight-buffer-id t)
+		(moe-theme-set-color 'green)
+		(powerline-moe-theme)
+		(moe-dark))
+#+END_SRC
+** Spacemacs-Theme
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'spacemacs-theme)
+	(package-refresh-contents)
+	(package-install 'spacemacs-theme))
+#+END_SRC
 * Keybindings
+** Package Keybindings
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-s") 'avy-goto-char)
+(global-set-key (kbd "M-y") 'popup-kill-ring)
+(global-set-key (kbd "C-x o") 'switch-window)
+(define-key help-map (kbd "b") 'ido-describe-bindings)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+END_SRC
 ** Open Config.org file
 #+BEGIN_SRC emacs-lisp
 (defun config-visit ()
@@ -99,7 +240,7 @@
 ** Kills Current Buffer
 #+BEGIN_SRC emacs-lisp
 (defun kill-current-buffer ()
- 	"Kills the current buffer."
+	"Kills the current buffer."
 	(interactive)
 	(kill-buffer (current-buffer)))
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
@@ -147,105 +288,5 @@
 #+END_SRC
 ** Kill a line
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-c l k") 'kill-whole-line)
-#+END_SRC
-* Packages
-** Which-Key
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-		:ensure t
-		:init (which-key-mode))
-#+END_SRC
-** SMEX
-#+BEGIN_SRC emacs-lisp
-(use-package smex
-		:ensure t
-		:init (smex-initialize)
-		:bind ("M-x" . smex))
-#+END_SRC
-** Ido-Describe-Bindings
- #+Begin_SRC emacs-lisp
- (use-package ido-describe-bindings
-		 :ensure t)
-		 (define-key help-map (kbd "b") 'ido-describe-bindings)
- #+END_SRC
-** Ido-Grid-Mode
-#+BEGIN_SRC emacs-lisp
-(use-package ido-grid-mode
-		:ensure t
-		:config
-		(ido-grid-mode 1))
-#+END_SRC
-** Org
-#+Begin_SRC emacs-lisp
-(use-package org
-		; :mode (("\\.org$" . org-mode))
-		:ensure t)
-#+END_SRC
-** Evil
-#+Begin_SRC emacs-lisp
-(use-package evil
-		:ensure t
-		:config (evil-mode -1))
-#+END_SRC
-** Beacon
-#+Begin_SRC emacs-lisp
-(use-package beacon
-		:ensure t
-		:config
-		(beacon-mode 1))
-#+END_SRC
-** Avy
-#+BEGIN_SRC emacs-lisp
-(use-package avy
-	:ensure t
-	:bind
-	("M-s" . avy-goto-char))
-#+END_SRC
-
-** Async
- #+BEGIN_SRC emacs-lisp
-(use-package async
-	:ensure t
-	:init (dired-async-mode 1))
- #+END_SRC
-** Switch Window
-#+BEGIN_SRC emacs-lisp
-(use-package switch-window
-	:ensure t
-	:config
-    (setq switch-window-input-style 'minibuffer)
-    (setq switch-window-increase 4)
-    (setq switch-window-threshold 2)
-	:bind
-	([remap other-window] . switch-window))
-#+END_SRC
-** Popup-Kill-Ring
-#+BEGIN_SRC emacs-lisp
-(use-package popup-kill-ring
-	:ensure t
-	:bind ("M-y" . popup-kill-ring))
-#+END_SRC
-** Powerline
-#+BEGIN_SRC emacs-lisp
-(use-package powerline
-		:ensure t
-		:config (powerline-default-theme))
-#+END_SRC
-** Moe-Theme
-#+BEGIN_SRC emacs-lisp
-(use-package moe-theme
-		:requires powerline
-		:ensure t
-		:config
-		(setq moe-theme-highlight-buffer-id t)
-		(moe-theme-set-color 'green)
-		(powerline-moe-theme)
-		(moe-dark))
-#+END_SRC
-** Spacemacs-Theme
-#+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'spacemacs-theme)
-		(package-refresh-contents)
-		(package-install 'spacemacs-theme))
+	(global-set-key (kbd "C-c l k") 'kill-whole-line)
 #+END_SRC
