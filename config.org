@@ -59,6 +59,14 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 #+END_SRC
+** Cursor Edge of Screen Scrolling
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+#+END_SRC
+** Disable Bell
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
 * Aliases
 ** Yes-Or-No -> Y-Or-N
 #+BEGIN_SRC emacs-lisp
@@ -118,6 +126,10 @@
 		(require 'evil-org-agenda)
 		(evil-org-agenda-set-keys))
 #+END_SRC
+** Org Indent Mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'org-indent-mode)
+#+END_SRC
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
@@ -176,7 +188,8 @@
 #+BEGIN_SRC emacs-lisp
 (use-package powerline
 	:ensure t
-	:config (powerline-default-theme))
+	;:config (powerline-default-theme)
+)
 #+END_SRC
 ** Moe-Theme
 #+BEGIN_SRC emacs-lisp
@@ -185,16 +198,39 @@
 	:ensure t
 	:after powerline
 	:config
-		(setq moe-theme-highlight-buffer-id t)
-		(moe-theme-set-color 'green)
-		(powerline-moe-theme)
-		(moe-dark))
+		;(setq moe-theme-highlight-buffer-id t)
+		;(moe-theme-set-color 'green)
+		;(powerline-moe-theme)
+		;(moe-dark)
+)
 #+END_SRC
 ** Spacemacs-Theme
 #+BEGIN_SRC emacs-lisp
 (unless (package-installed-p 'spacemacs-theme)
 	(package-refresh-contents)
-	(package-install 'spacemacs-theme))
+	(package-install 'spacemacs-theme)
+)
+#+END_SRC
+** Cyberpunk Theme
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'cyberpunk-theme)
+	(package-refresh-contents)
+	(package-install 'cyberpunk-theme)
+)
+#+END_SRC
+** Hemisu Theme
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'hemisu-theme)
+	(package-refresh-contents)
+	(package-install 'hemisu-theme)
+)
+#+END_SRC
+** Sanityinc Tomorrow Theme
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'color-theme-sanityinc-tomorrow)
+	(package-refresh-contents)
+	(package-install 'color-theme-sanityinc-tomorrow)
+)
 #+END_SRC
 * Keybindings
 ** Package Keybindings
