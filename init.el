@@ -57,7 +57,7 @@
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-	(linum-relative key-chord magit color-theme-sanityinc-tomorrow hemisu-theme cyberpunk-theme spacemacs-theme moe-theme powerline popup-kill-ring switch-window async fill-column-indicator avy beacon dashboard page-break-lines projectile org-bullets evil-org evil ido-grid-mode ido-describe-bindings smex which-key use-package)))
+	(htmlize htmlize-buffer emacs-htmlize linum-relative key-chord magit color-theme-sanityinc-tomorrow hemisu-theme cyberpunk-theme spacemacs-theme moe-theme powerline popup-kill-ring switch-window async fill-column-indicator avy beacon dashboard page-break-lines projectile org-bullets evil-org evil ido-grid-mode ido-describe-bindings smex which-key use-package)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
